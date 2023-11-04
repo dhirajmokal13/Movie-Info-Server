@@ -1,0 +1,42 @@
+import Mongoose from "mongoose";
+
+const userSchema = new Mongoose.Schema({
+    name: { type: String, required: true },
+
+    email: {
+        type: String, required: true, unique: true,
+        validate: {
+            validator: emailExample => {
+                return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailExample);
+            },
+            message: props => `${props.value} is not a valid email!`
+        }
+    },
+
+    mobileNumber: {
+        type: Number, required: true, trim: true,
+        validate: {
+            validator: mobileNumber => {
+                return /^[0-9]{10}$/.test(mobileNumber);
+            },
+            message: props => `${props.value} is not a valid mobile number!`
+        }
+    },
+
+    password: { type: String, required: true, },
+
+    role: {
+        type: String,
+        enum: ["User", "Proffesional"],
+        default: "User",
+    },
+
+    registrationDate: {
+        type: Date,
+        default: Date.now(),
+    }
+});
+
+const userModel = Mongoose.model('User', userSchema);
+
+export default userModel;

@@ -1,0 +1,29 @@
+{
+  "name": "movie_data",
+  "version": "1.0.0",
+  "description": "This is backend of movie data app it provide some backend stuff for it. like registration, login, rating and many more it expose some rest api.",
+  "main": "Server.js",
+  "author": "Dhiraj Mokal",
+  "scripts": {
+    "dev": "nodemon Server",
+    "start": "node Server.js"
+  },
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "mongoose": "^8.0.0",
+    "nodemailer": "^6.9.7",
+    "redis": "^4.6.10"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.15",
+    "@types/express": "^4.17.20",
+    "nodemon": "^3.0.1"
+  }
+}

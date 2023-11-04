@@ -1,0 +1,21 @@
+[Timestamp]: November 2nd 2023, 7:52:42 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: User validation failed: email: dhirajmokal13gmail.com is not a valid email!
+[Timestamp]: November 2nd 2023, 8:02:04 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: User validation failed: email: dhirajmokal13gmail.com is not a valid email!
+[Timestamp]: November 2nd 2023, 8:02:13 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "dhirajmokal13@gmail.com" }
+[Timestamp]: November 2nd 2023, 8:05:38 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: movieReviews validation failed: movie_id: Path `movie_id` is required., review: Path `review` is required.
+[Timestamp]: November 2nd 2023, 8:05:54 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: movieReviews validation failed: rating: Path `rating` (9) is more than maximum allowed value (5).
+[Timestamp]: November 2nd 2023, 8:06:24 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: E11000 duplicate key error collection: test.moviereviews index: movie_id_1_user_id_1 dup key: { movie_id: "adsd", user_id: ObjectId('6543b011d513bee8c1a9a8ba') }
+[Timestamp]: November 2nd 2023, 8:06:37 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: E11000 duplicate key error collection: test.moviereviews index: movie_id_1_user_id_1 dup key: { movie_id: "adsde", user_id: ObjectId('6543b011d513bee8c1a9a8ba') }
+[Timestamp]: November 2nd 2023, 9:52:36 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: reviewResults.length is not a function
+[Timestamp]: November 2nd 2023, 10:40:13 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: sch is not defined
+[Timestamp]: November 2nd 2023, 11:10:27 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Invalid $addFields :: caused by :: FieldPath field names may not start with '$'. Consider using $getField or $setField.
+[Timestamp]: November 2nd 2023, 11:13:00 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Invalid $addFields :: caused by :: Expression $in takes exactly 2 arguments. 1 were passed in.
+[Timestamp]: November 2nd 2023, 11:14:57 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Invalid $addFields :: caused by :: Expression $in takes exactly 2 arguments. 1 were passed in.
+[Timestamp]: November 2nd 2023, 11:19:50 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: questionId is not defined
+[Timestamp]: November 2nd 2023, 11:20:26 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Invalid $addFields :: caused by :: Unrecognized expression '$pull'
+[Timestamp]: November 2nd 2023, 11:21:27 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Invalid $addFields :: caused by :: Unrecognized expression '$pull'
+[Timestamp]: November 2nd 2023, 11:36:47 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Invalid $addFields :: caused by :: Expression $in takes exactly 2 arguments. 1 were passed in.
+[Timestamp]: November 2nd 2023, 11:38:11 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Arguments must be aggregate pipeline operators
+[Timestamp]: November 2nd 2023, 11:41:22 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Class constructor ObjectId cannot be invoked without 'new'
+[Timestamp]: November 2nd 2023, 11:50:34 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: PlanExecutor error during aggregation :: caused by :: $mergeObjects requires object inputs, but input [] is of type array
+[Timestamp]: November 2nd 2023, 11:52:17 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Cast to [ObjectId] failed for value "[ { '$cond': { if: [Object], then: [Object], else: [Object] } } ]" (type string) at path "likes.0" because of "CastError"
+[Timestamp]: November 3rd 2023, 12:00:09 am,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: PlanExecutor error during aggregation :: caused by :: $mergeObjects requires object inputs, but input ["6543b011d513bee8c1a9a8ba"] is of type array
