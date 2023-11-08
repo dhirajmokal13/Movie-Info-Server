@@ -34,7 +34,7 @@ class reviewController {
             const user_id = req.userId;
             const reviewId = req.body.reviewId;
             const isDeleteReview = await reviewModal.deleteOne({ _id: reviewId, user_id });
-            isDeleteReview?.deletedCount > 0 ? res.status(200).send({ status: "Review Removed" }) : res.status(403).send({ status: "Review Can't Removed" });
+            isDeleteReview ? res.status(200).send({ status: "Review Removed" }) : res.status(403).send({ status: "Review Can't Removed" });
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);

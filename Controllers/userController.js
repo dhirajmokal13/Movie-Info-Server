@@ -101,7 +101,7 @@ class userController {
     static removeUser = async (req, res) => {
         try {
             const isUserRemoved = await userModel.findByIdAndDelete(req.userId);
-            isUserRemoved?.deletedCount > 0 ? res.status(200).send({ Status: "Account Deleted" }) : res.status(403).send({ status: "Account Can't Delete" });
+            isUserRemoved ? res.status(200).send({ Status: "Account Deleted" }) : res.status(403).send({ status: "Account Can't Delete" });
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);
