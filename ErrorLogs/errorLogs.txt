@@ -21,3 +21,6 @@
 [Timestamp]: November 3rd 2023, 12:00:09 am,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: PlanExecutor error during aggregation :: caused by :: $mergeObjects requires object inputs, but input ["6543b011d513bee8c1a9a8ba"] is of type array
 [Timestamp]: November 8th 2023, 4:56:54 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: connection 2 to 15.206.156.208:27017 closed
 [Timestamp]: November 8th 2023, 4:57:26 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: E11000 duplicate key error collection: test.users index: email_1 dup key: { email: "dhirajmokal14@gmail.com" }
+[Timestamp]: November 9th 2023, 12:56:40 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Review is not defined
+[Timestamp]: November 9th 2023, 12:57:45 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Cannot read properties of undefined (reading 'totalLikes')
+[Timestamp]: November 9th 2023, 1:09:06 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Assignment to constant variable.

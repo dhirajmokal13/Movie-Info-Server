@@ -104,8 +104,10 @@ class reviewController {
     static fetchReviews = async (req, res) => {
         try {
             const movieId = req.params.movie_id;
-            const reviewResults = await reviewModal.find({ movie_id: movieId });
-            reviewResults.length > 0 ? res.status(200).send({ status: "success", reviewResults }) : res.sendStatus(404);
+            let totalLikes = 0;
+            const reviewResults = await reviewModal.find({ movie_id: movieId }).populate({ path: 'user_id', select: 'name email role' });
+            for (let i = 0; i < reviewResults.length; i++) totalLikes += reviewResults[i].likes.length;
+            reviewResults.length > 0 ? res.status(200).send({ status: "success", reviewResults, totalLikes }) : res.sendStatus(404);
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);
