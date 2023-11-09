@@ -17,7 +17,7 @@ class reviewController {
             const { movie_id, review, rating } = req.body;
             const user_id = req.userId;
             const createReview = await new reviewModal({ movie_id, user_id, review, rating }).save();
-            createReview && res.status(401).send({ status: "Review Created" });
+            createReview && res.status(201).send({ status: "Review Created" });
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.status(403).send(err.message);
