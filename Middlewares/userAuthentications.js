@@ -12,7 +12,7 @@ const userAuth = async (req, res, next) => {
         //Getting Authentication header
         const authHeader = req.headers['authorization'];
          //if Token is not in authentication header then send responce Unauthorized
-         if (authHeader) return res.sendStatus(401);
+         if (!authHeader) return res.sendStatus(401);
          //Header Having Two parameter Barear and token so extracting using split
          const token = authHeader?.split(' ')[1];
         //Checking Authenticity of token
