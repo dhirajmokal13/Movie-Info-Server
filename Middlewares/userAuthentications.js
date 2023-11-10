@@ -11,18 +11,18 @@ const userAuth = async (req, res, next) => {
     try {
         //Getting Authentication header
         const authHeader = req.headers['authorization'];
-        //Header Having Two parameter Barear and token so extracting using split
-        const token = authHeader?.split(' ')[1];
-        //if Token is not in authentication header then send responce Unauthorized
-        if (!token) return res.sendStatus(401);
+         //if Token is not in authentication header then send responce Unauthorized
+         if (authHeader) return res.sendStatus(401);
+         //Header Having Two parameter Barear and token so extracting using split
+         const token = authHeader?.split(' ')[1];
         //Checking Authenticity of token
         Jwt.verify(token, process.env.JWT_SECRET, async (err, TokenData) => {
             //if error thrown Checking malfunctioning of token if happen then unauthorized responce
-            if (err) return err.name === 'JsonWebTokenError' ? res.sendStatus(401) : res.status(401).send(err.message);
+            if (err) return err.name === 'JsonWebTokenError' ? res.sendStatus(401) : res.status(403).send(err.message);
             //Checking the id of user is present or not in redis cashing
             const isTokenPresent = await redisClient.get(TokenData.user_id);
             //If not Present in Redis Cashing or Tokens Not Matching Return then responce as Forbidden
-            if ((!isTokenPresent) || (JSON.parse(isTokenPresent).jwtToken !== token)) res.status(403).send('Token Expired');
+            if ((!isTokenPresent) || (JSON.parse(isTokenPresent).jwtToken !== token)) res.status(403).send('jwt expired');
             else {
                 //Adding Extra userId parameter to packet
                 req.userId = TokenData.user_id;

@@ -56,7 +56,7 @@ class userController {
                     "jwtToken": jwtToken,
                     "jwtRefreshToken": jwtRefreshToken
                 }), 'NX', 'EX', 86400);
-                res.status(200).send({ status: "Login Success", jwtToken, jwtRefreshToken });
+                res.status(200).send({ status: "Login Success", jwtToken, jwtRefreshToken, userId: userExists._id.toString() });
             } else {
                 res.status(401).send({ status: "Failed", message: "Invalid Credentials" });
             }
@@ -116,13 +116,12 @@ class userController {
     static tokenRefresh = async (req, res) => {
         try {
             const authHeader = req.headers['authorization'];
+            if (!authHeader) return res.sendStatus(401);
             const refreshToken = authHeader?.split(' ')[1];
-            if (!refreshToken) return res.sendStatus(401);
-
             Jwt.verify(refreshToken, jwtRefreshSecret, async (err, TokenData) => {
-                if (err) return err.name === 'JsonWebTokenError' ? res.sendStatus(401) : res.status(401).send(err.message);
+                if (err) return err.name === 'JsonWebTokenError' ? res.sendStatus(401) : res.status(403).send(err.message);
                 const isRefreshTokenPresent = await redisClient.get(TokenData.user_id);
-                if ((!isRefreshTokenPresent) || (JSON.parse(isRefreshTokenPresent).jwtRefreshToken !== refreshToken)) res.status(403).send('Token Expired');
+                if ((!isRefreshTokenPresent) || (JSON.parse(isRefreshTokenPresent).jwtRefreshToken !== refreshToken)) res.status(403).send('jwt expired');
                 else {
                     const userId = TokenData.user_id;
                     const jwtToken = Jwt.sign({ user_id: userId }, jwtSecret, { expiresIn: "2h" });
@@ -131,7 +130,7 @@ class userController {
                         "jwtToken": jwtToken,
                         "jwtRefreshToken": jwtRefreshToken
                     }), 'NX', 'EX', 86400);
-                    redisResponce && res.status(200).send({ status: "Tokens Generated", jwtToken, jwtRefreshToken });
+                    redisResponce && res.status(200).send({ status: "Tokens Refreshed", jwtToken, jwtRefreshToken, userId });
                 }
             })
         } catch (err) {
