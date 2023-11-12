@@ -1,6 +1,5 @@
 import reviewModal from "../Models/reviewsModel.js";
 import errorsLoger from "../ErrorLogs/errorLoger.js";
-import Mongoose from "mongoose";
 
 /**
  * ReviewController class have static methods which is used to manage reviews of movies

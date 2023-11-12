@@ -6,6 +6,7 @@ import mongooseConnection from "./Connections/mongooseConnection.js";
 //import Routes
 import userRoutes from "./Routes/userRoutes.js";
 import reviewsRoute from "./Routes/reviewsRoutes.js";
+import showRoute from "./Routes/showRoutes.js";
 import cors from "cors";
 
 //Mongoose Database Defining
@@ -27,5 +28,6 @@ Server.use(cors({
 //Loud Routes
 Server.use('/api/user/', userRoutes);
 Server.use("/api/reviews/", reviewsRoute);
+Server.use("/api/show", showRoute);
 //Server Listening
 Server.listen(process.env.PORT || "4000", err => err && console.error(err) || console.log('\x1b[35m', `Server successfully run on ${process.env.PORT || "4000"} PORT`, '\x1b[0m'))
