@@ -28,7 +28,7 @@ class showController {
         try {
             const { movie_id } = req.params;
             const showDetails = await showModel.findOne({ movie_id });
-            showDetails && res.status(200).send({ status: 'success', showData: showDetails });
+            showDetails ? res.status(200).send({ status: 'success', showData: showDetails }) : res.sendStatus(404);
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);
