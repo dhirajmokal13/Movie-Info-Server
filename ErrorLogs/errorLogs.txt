@@ -24,3 +24,4 @@
 [Timestamp]: November 9th 2023, 12:56:40 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Review is not defined
 [Timestamp]: November 9th 2023, 12:57:45 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Cannot read properties of undefined (reading 'totalLikes')
 [Timestamp]: November 9th 2023, 1:09:06 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: Assignment to constant variable.
+[Timestamp]: December 13th 2023, 7:51:03 pm,  [Ip]:  ::ffff:127.0.0.1,  [Error Message]: suggestion validation failed: Type: `game` is not a valid enum value for path `Type`.

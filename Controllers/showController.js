@@ -1,4 +1,5 @@
 import showModel from "../Models/showModel.js";
+import suggestionModel from "../Models/suggestionsModel.js";
 import errorsLoger from "../ErrorLogs/errorLoger.js";
 
 class showController {
@@ -29,6 +30,32 @@ class showController {
             const { movie_id } = req.params;
             const showDetails = await showModel.findOne({ movie_id });
             showDetails ? res.status(200).send({ status: 'success', showData: showDetails }) : res.sendStatus(404);
+        } catch (err) {
+            console.error(await errorsLoger(err.message, req.ip));
+            res.sendStatus(500);
+        }
+    }
+
+    /* The `addSuggestion` method is a static method of the `showController` class. It is used to add a
+    new suggestion to the database by saving the provided `imdbID`, `Title`, `Year`, `Type`,
+    `Poster`, and `Tags` in the `suggestionModel`. */
+    static addSuggestion = async (req, res) => {
+        try {
+            const { imdbID, Title, Year, Type, Poster } = req.body;
+            const addResult = await new suggestionModel({ imdbID, Title, Year, Type, Tags: req.body.tags || [], Poster }).save();
+            addResult && res.status(201).send({ status: 'Suggestion Data is created' });
+        } catch (err) {
+            console.error(await errorsLoger(err.message, req.ip));
+            res.sendStatus(500);
+        }
+    }
+
+   /* The `fetchSuggestion` method is a static method of the `showController` class. It is used to
+   fetch all the suggestion data from the database using the `suggestionModel`. */
+    static fetchSuggestion = async (req, res) => {
+        try {
+            const suggestionResult = await suggestionModel.find();
+            res.status(200).send(suggestionResult);
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);
