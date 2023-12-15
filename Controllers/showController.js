@@ -1,6 +1,7 @@
+import axios from "axios";
 import showModel from "../Models/showModel.js";
-import suggestionModel from "../Models/suggestionsModel.js";
 import errorsLoger from "../ErrorLogs/errorLoger.js";
+const recommendationServerLink = process.env.RECOMMENDATIONS_SERVER;
 
 class showController {
 
@@ -36,26 +37,30 @@ class showController {
         }
     }
 
-    /* The `addSuggestion` method is a static method of the `showController` class. It is used to add a
-    new suggestion to the database by saving the provided `imdbID`, `Title`, `Year`, `Type`,
-    `Poster`, and `Tags` in the `suggestionModel`. */
-    static addSuggestion = async (req, res) => {
+    /**
+     * The `fetchSuggestions` method is a static method of the `showController` class. It is used to fetch random suggestions for shows from a recommendation server.
+     * @param {"Request Object"} req 
+     * @param {"Responce Object"} res 
+     */
+    static fetchSuggestions = async (req, res) => {
         try {
-            const { imdbID, Title, Year, Type, Poster } = req.body;
-            const addResult = await new suggestionModel({ imdbID, Title, Year, Type, Tags: req.body.tags || [], Poster }).save();
-            addResult && res.status(201).send({ status: 'Suggestion Data is created' });
+            const suggestions = await axios.get(`${recommendationServerLink}/randoms`);
+            suggestions.data.Found ? res.status(200).send(suggestions.data.data) : res.sendStatus(404);
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);
         }
     }
 
-   /* The `fetchSuggestion` method is a static method of the `showController` class. It is used to
-   fetch all the suggestion data from the database using the `suggestionModel`. */
-    static fetchSuggestion = async (req, res) => {
+    /**
+     * The `fetchRecommendations` method is a static method of the `showController` class. It is used to fetch recommendations for a show based on the `imdbID` parameter provided in the request URL
+     * @param {"Request Object"} req 
+     * @param {"Responce Object"} res 
+     */
+    static fetchRecommendations = async (req, res) => {
         try {
-            const suggestionResult = await suggestionModel.find();
-            res.status(200).send(suggestionResult);
+            const recommendation = await axios.get(`${recommendationServerLink}/recommendation?imdbID=${req.params.imdbID}`);
+            recommendation.data.Found ? res.status(200).send(recommendation.data.data) : res.sendStatus(404);
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);
