@@ -13,15 +13,7 @@ const userSchema = new Mongoose.Schema({
         }
     },
 
-    mobileNumber: {
-        type: Number, required: true, trim: true,
-        validate: {
-            validator: mobileNumber => {
-                return /^[0-9]{10}$/.test(mobileNumber);
-            },
-            message: props => `${props.value} is not a valid mobile number!`
-        }
-    },
+    mobileNumber: { type: String, required: true, trim: true, },
 
     password: { type: String, required: true, },
 

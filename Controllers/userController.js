@@ -22,7 +22,8 @@ class userController {
      */
     static registerUser = async (req, res) => {
         try {
-            let { name, email, mobileNumber, password, role } = req.body;
+            let { name, email, countryCode, mobileNumber, password, role } = req.body;
+            mobileNumber = `${countryCode} ${mobileNumber}`;
             if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
                 password = await bcrypt.hash(password, 10);
                 const createRegister = new userModel({ name, email, mobileNumber, password, role });
