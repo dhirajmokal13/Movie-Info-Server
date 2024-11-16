@@ -1,6 +1,8 @@
 import axios from "axios";
 import showModel from "../Models/showModel.js";
 import errorsLoger from "../ErrorLogs/errorLoger.js";
+import userModel from "../Models/userModel.js";
+import mongoose from "mongoose";
 const recommendationServerLink = process.env.RECOMMENDATIONS_SERVER;
 
 class showController {
@@ -44,7 +46,23 @@ class showController {
      */
     static fetchSuggestions = async (req, res) => {
         try {
-            const suggestions = await axios.get(`${recommendationServerLink}/randoms`);
+            let userHistories = []
+            if(req.userId) {
+                const userHistorie = await userModel.aggregate([
+                    { $match: { _id: new mongoose.Types.ObjectId(req.userId) } },
+                    { $unwind: "$searchHistories" },
+                    { $sort: { "searchHistories.time": -1 } },
+                    { $limit: 5 },
+                    {
+                        $group: {
+                            _id: "$_id",
+                            latestSearchHistories: { $push: "$searchHistories" }
+                        }
+                    }
+                ]);
+                userHistories = userHistorie[0].latestSearchHistories || [];
+            }
+            const suggestions = await axios.get(`${recommendationServerLink}/randoms`, { userHistories });
             suggestions.data.Found ? res.status(200).send(suggestions.data.data) : res.sendStatus(404);
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));

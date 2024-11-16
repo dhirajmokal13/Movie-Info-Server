@@ -5,6 +5,7 @@ import Jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import redisClient from "../Connections/redisConnection.js";
 import sendMail from "../Middlewares/sendMail.js";
+import mongoose from "mongoose";
 import errorsLoger from "../ErrorLogs/errorLoger.js";
 const jwtSecret = process.env.JWT_SECRET
 const jwtRefreshSecret = process.env.JWT_SECRET_REFRESH
@@ -150,6 +151,45 @@ class userController {
             const email = req.params.email;
             const userExist = await userModel.findOne({ email });
             userExist ? res.status(200).send({ userExist: true }) : res.status(200).send({ userExist: false })
+        } catch (err) {
+            console.error(await errorsLoger(err.message, req.ip));
+            res.sendStatus(500);
+        }
+    }
+
+    static insertUserSearchHistory = async (req, res) => {
+        try {
+            const userId = req.userId;
+            const searchText = req.body.search;
+            const userSearchHistoryInsert = await userModel.findByIdAndUpdate(
+                userId,
+                { $push: { searchHistories: { search: searchText } } },
+                { new: true }
+            );
+            return userSearchHistoryInsert ? res.status(200).send({ status: true, message: 'user search history is created' }): res.status(403).send({ status: false, message: 'user history can not created'})
+        } catch (err) {
+            console.error(await errorsLoger(err.message, req.ip));
+            res.sendStatus(500);
+        }
+    }
+
+    static getUserSearchHistory = async (req, res) => {
+        try {
+            const { limit } = req.body;
+            const userId = req.userId;
+            const userHistories = await userModel.aggregate([
+                { $match: { _id: new mongoose.Types.ObjectId(userId) } },
+                { $unwind: "$searchHistories" },
+                { $sort: { "searchHistories.time": -1 } },
+                ...(limit ? [{ $limit: parseInt(limit, 10) }] : []),
+                {
+                    $group: {
+                        _id: "$_id",
+                        latestSearchHistories: { $push: "$searchHistories" }
+                    }
+                }
+            ]);
+            return res.status(200).json({ success: true, data: userHistories });
         } catch (err) {
             console.error(await errorsLoger(err.message, req.ip));
             res.sendStatus(500);

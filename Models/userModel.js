@@ -26,7 +26,19 @@ const userSchema = new Mongoose.Schema({
     registrationDate: {
         type: Date,
         default: Date.now(),
-    }
+    },
+    searchHistories: [
+        {
+            search: {
+                type: String,
+                required: true
+            },
+            time: {
+                type: Date,
+                default: Date.now()
+            }
+        }
+    ]
 });
 
 const userModel = Mongoose.model('User', userSchema);
