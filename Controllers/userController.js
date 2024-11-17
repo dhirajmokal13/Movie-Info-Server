@@ -196,6 +196,29 @@ class userController {
         }
     }
 
+    static removeSearchHistory = async (req, res) => {
+        const { searchHistoryId } = req.params;
+        const userId = req.userId;
+        let removed;
+        if(searchHistoryId === 'all') {
+            removed = await userModel.updateOne(
+                { _id: new mongoose.Types.ObjectId(userId) },
+                { $set: { searchHistories: [] } } 
+            );
+        } else {
+            removed = await userModel.updateOne(
+                { _id: new mongoose.Types.ObjectId(userId) },
+                { 
+                    $pull: { 
+                        searchHistories: { 
+                            _id: new mongoose.Types.ObjectId(searchHistoryId),
+                        } 
+                    }
+                }
+            );
+        }
+        return removed? res.status(200).send({ status: true, message: 'search history removed' }) : res.status(404).send({ status: false, message: 'search history not removed' })
+    }
 }
 
 export default userController;

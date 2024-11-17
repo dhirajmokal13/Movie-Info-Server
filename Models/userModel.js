@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import moment from "moment";
 
 const userSchema = new Mongoose.Schema({
     name: { type: String, required: true },
@@ -25,7 +26,7 @@ const userSchema = new Mongoose.Schema({
 
     registrationDate: {
         type: Date,
-        default: Date.now(),
+        default: Date.now()
     },
     searchHistories: [
         {

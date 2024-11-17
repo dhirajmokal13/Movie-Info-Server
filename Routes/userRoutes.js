@@ -12,4 +12,5 @@ userRoutes.patch("/token/refresh/", userController.tokenRefresh);
 userRoutes.delete("/", userAuth({ tokenOptional: false }), userController.removeUser);
 userRoutes.post("/search/history", userAuth({ tokenOptional: false }), userController.insertUserSearchHistory);
 userRoutes.get("/search/history", userAuth({ tokenOptional: false }), userController.getUserSearchHistory);
+userRoutes.delete('/search/history/:searchHistoryId', userAuth({ tokenOptional: false }), userController.removeSearchHistory);
 export default userRoutes;
