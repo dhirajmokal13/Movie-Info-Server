@@ -32,6 +32,7 @@ const userSchema = new Mongoose.Schema({
         {
             search: {
                 type: String,
+                unique: true,
                 required: true
             },
             time: {

@@ -9,7 +9,9 @@ import moment from "moment";
  */
 const errorsLoger = (err, ip) => {
     return new Promise((resolve, reject) => {
-        fs.appendFile('./ErrorLogs/errorLogs.txt', `[Timestamp]: ${moment().format('MMMM Do YYYY, h:mm:ss a')},  [Ip]:  ${ip},  [Error Message]: ${err}\n`, (err) => {
+        const errMsg = `[Timestamp]: ${moment().format('MMMM Do YYYY, h:mm:ss a')},  [Ip]:  ${ip},  [Error Message]: ${err}\n`;
+        console.error("Error ==> ", errMsg);
+        fs.appendFile('./ErrorLogs/errorLogs.txt', errMsg, (err) => {
             if (err) reject(err.message);
             resolve("Error Logged")
         });
