@@ -175,7 +175,7 @@ class userController {
 
     static getUserSearchHistory = async (req, res) => {
         try {
-            const { limit } = req.body;
+            const { limit } = req.params;
             const userId = req.userId;
             const userHistories = await userModel.aggregate([
                 { $match: { _id: new mongoose.Types.ObjectId(userId) } },
